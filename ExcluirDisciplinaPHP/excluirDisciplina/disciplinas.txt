@@ -1,0 +1,4 @@
+nome;sigla;carga
+3PBD - Banco;3PBD;120
+1FAC - Fundamento e Algoritmo da Computação;1FAC;120
+3DAW - Desenvolvimento Web;3DAW;120
