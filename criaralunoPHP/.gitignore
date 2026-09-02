@@ -1,0 +1,6 @@
+# Ignorar arquivos de dados locais
+alunos.txt
+
+# Ignorar pastas de sistema/IDE
+.vscode/
+.idea/
