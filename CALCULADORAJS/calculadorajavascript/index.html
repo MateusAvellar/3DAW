@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+</head>
+
+<body>
+
+    <h2>Calculadora</h2>
+
+    <form id="calcForm" onsubmit="return false;">
+        <label for="a">Primeiro númer:</label><br>
+        <input type="number" id="a" step="any" required><br><br>
+
+        <label for="operacao">Operação:</label><br>
+        
+        <select id="operacao">
+            <option value="+">Soma (+)</option>
+            <option value="-">Subtração (-)</option>
+            <option value="*">Multiplicação (*)</option>
+            <option value="/">Divisão (/)</option>
+        </select><br><br>
+
+        <label for="b">Segundo número (b):</label><br>
+        <input type="number" id="b" step="any" required><br><br>
+
+        <!--onclick -->
+        <button type="button" onclick="enviarParaPHP()">Enviar</button>
+    </form>
+
+    
+    <h3 id="resultadoContainer">Resultado: <span id="resultadoText">-</span></h3>
+
+    <script>
+        function enviarParaPHP(){
+            // 1. Pega os valores digitados no formulário
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const op = document.getElementById('operacao').value;
+
+
+            // 2. Prepara os dados no formato JSON
+            const dados = {
+                numero1: a,
+                numero2: b,
+                operacao: op
+            };
+
+            // 3. Faz a requisição HTTP POST para o arquivo PHP usando fetch
+            fetch('calculadora.php',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            })
+            .then(resposta => resposta.text()) // Pega o texto de resposta que veio do PHP
+            .then(resultado => {
+                // 4. Insere a resposta do PHP diretamente no HTML
+                document.getElementById('resultadoText').innerText = resultado;
+            })
+            .catch(erro => {
+                console.error("Erro na requisição:", erro);
+                document.getElementById('resultadoText').innerText = "Erro ao conectar com o PHP.";
+            });
+        }
+    </script>
+</body>
+</html>
